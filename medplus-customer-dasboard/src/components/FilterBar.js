@@ -18,6 +18,9 @@ const FilterBar = ({
   return (
     <div className="filter-bar mb-4 p-3 bg-white rounded shadow-sm">
       <Row className="g-3">
+        <h5 className="d-flex align-items-center gap-2">
+          <i className="bi bi-funnel"></i> Filters
+        </h5>
         <Col md={3}>
           <Form.Group controlId="filterState">
             <Form.Label className="small text-muted fw-bold">State</Form.Label>
