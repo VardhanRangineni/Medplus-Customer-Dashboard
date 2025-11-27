@@ -442,7 +442,23 @@ const DashboardSections = ({ data }) => {
                             </thead>
                             <tbody>
                                 {customerRetention.volumeMetricsByRetentionMonth.map((row, index) => {
-                                    const getCellStyle = (val) => {
+                                        const getRetentionField = (row, key) => {
+                                            if (!row) return undefined;
+                                            if (key in row) return row[key];
+                                            // fallback to nested categoryRevenueSplit for category keys
+                                            if (row.categoryRevenueSplit) {
+                                                const map = {
+                                                    pBrC: 'P_BR_C', pPlC: 'P_PL_C', pBrA: 'P_BR_A', pPlA: 'P_PL_A', nBr: 'N_BR', nPl: 'N_PL', sip: 'SIP'
+                                                };
+                                                const mapKey = map[key];
+                                                if (mapKey && row.categoryRevenueSplit[mapKey] !== undefined) return row.categoryRevenueSplit[mapKey];
+                                            }
+                                            // Try common aliases
+                                            if (key === 'total' && row.totalRevenue !== undefined) return row.totalRevenue;
+                                            return undefined;
+                                        };
+
+                                        const getCellStyle = (val) => {
                                         if (!val) return {};
                                         if (typeof val === 'string' && val.includes('%')) {
                                             const num = parseInt(val);
@@ -456,16 +472,16 @@ const DashboardSections = ({ data }) => {
                                     return (
                                         <tr key={index}>
                                             <td style={{ fontWeight: 'bold' }}>{row.retentionMonth}</td>
-                                            <td>{row.customers}</td>
-                                            <td style={getCellStyle(row.invoices)}>{row.invoices}</td>
-                                            <td style={getCellStyle(row.total)}>{row.total}</td>
-                                            <td style={getCellStyle(row.pBrC)}>{row.pBrC}</td>
-                                            <td style={getCellStyle(row.pPlC)}>{row.pPlC}</td>
-                                            <td style={getCellStyle(row.pBrA)}>{row.pBrA}</td>
-                                            <td style={getCellStyle(row.pPlA)}>{row.pPlA}</td>
-                                            <td style={getCellStyle(row.nBr)}>{row.nBr}</td>
-                                            <td style={getCellStyle(row.nPl)}>{row.nPl}</td>
-                                            <td style={getCellStyle(row.sip)}>{row.sip}</td>
+                                            <td>{getRetentionField(row, 'customers') || getRetentionField(row, 'customers') || ''}</td>
+                                            <td style={getCellStyle(getRetentionField(row, 'invoices'))}>{getRetentionField(row, 'invoices') || ''}</td>
+                                            <td style={getCellStyle(getRetentionField(row, 'total'))}>{getRetentionField(row, 'total') || ''}</td>
+                                            <td style={getCellStyle(getRetentionField(row, 'pBrC'))}>{getRetentionField(row, 'pBrC') || ''}</td>
+                                            <td style={getCellStyle(getRetentionField(row, 'pPlC'))}>{getRetentionField(row, 'pPlC') || ''}</td>
+                                            <td style={getCellStyle(getRetentionField(row, 'pBrA'))}>{getRetentionField(row, 'pBrA') || ''}</td>
+                                            <td style={getCellStyle(getRetentionField(row, 'pPlA'))}>{getRetentionField(row, 'pPlA') || ''}</td>
+                                            <td style={getCellStyle(getRetentionField(row, 'nBr'))}>{getRetentionField(row, 'nBr') || ''}</td>
+                                            <td style={getCellStyle(getRetentionField(row, 'nPl'))}>{getRetentionField(row, 'nPl') || ''}</td>
+                                            <td style={getCellStyle(getRetentionField(row, 'sip'))}>{getRetentionField(row, 'sip') || ''}</td>
                                         </tr>
                                     );
                                 })}
