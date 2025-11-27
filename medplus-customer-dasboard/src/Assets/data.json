@@ -1,0 +1,648 @@
+{
+    "dashboardId": "medplus_india_dashboard_2024",
+    "metadata": {
+        "title": "MedPlus Customer & Sales Dashboard - India",
+        "currency": "INR",
+        "timeZone": "Asia/Kolkata",
+        "lastUpdated": "2024-12-01T09:30:00+05:30",
+        "notes": "Mock dataset for dashboard prototype"
+    },
+    "kpis": {
+        "invoices": 185000,
+        "revenue": 248000000,
+        "aov": 1340,
+        "dauMauRatio": 0.28,
+        "todaysActiveUsers": 18500,
+        "mtdMaPharmaPlansSold": 920,
+        "additionalMetrics": {
+            "growthPct": 0.12,
+            "someCount": 24000000,
+            "otherIndex": 182
+        }
+    },
+    "customerSegmentation": {
+        "byPurchaseValue": [
+            {
+                "min": 0,
+                "max": 300,
+                "customerCount": 52000
+            },
+            {
+                "min": 300,
+                "max": 500,
+                "customerCount": 41000
+            },
+            {
+                "min": 500,
+                "max": 1000,
+                "customerCount": 28500
+            },
+            {
+                "min": 1000,
+                "max": 2000,
+                "customerCount": 13500
+            },
+            {
+                "min": 2000,
+                "max": 5000,
+                "customerCount": 4200
+            },
+            {
+                "min": 5000,
+                "max": null,
+                "customerCount": 650
+            }
+        ],
+        "byChannel": [
+            {
+                "channelId": "POS",
+                "label": "POS",
+                "pct": 0.68
+            },
+            {
+                "channelId": "WEB",
+                "label": "Website",
+                "pct": 0.07
+            },
+            {
+                "channelId": "MOB",
+                "label": "Mobile App",
+                "pct": 0.17
+            },
+            {
+                "channelId": "PWEB",
+                "label": "P-Web",
+                "pct": 0.05
+            },
+            {
+                "channelId": "CRM",
+                "label": "CRM",
+                "pct": 0.03
+            }
+        ],
+        "topCustomers": [
+            {
+                "customerId": "CUST001",
+                "name": "Rohit Sharma",
+                "purchaseValue": 45210
+            },
+            {
+                "customerId": "CUST002",
+                "name": "Amit Verma",
+                "purchaseValue": 38990
+            },
+            {
+                "customerId": "CUST003",
+                "name": "Priya Narayan",
+                "purchaseValue": 31480
+            },
+            {
+                "customerId": "CUST004",
+                "name": "Karthik Reddy",
+                "purchaseValue": 29940
+            },
+            {
+                "customerId": "CUST005",
+                "name": "Sneha Pillai",
+                "purchaseValue": 28310
+            },
+            {
+                "customerId": "CUST006",
+                "name": "Harshad Mehta",
+                "purchaseValue": 27840
+            }
+        ],
+        "revenueByChannel": [
+            {
+                "channelId": "POS",
+                "pct": 0.70
+            },
+            {
+                "channelId": "WEB",
+                "pct": 0.06
+            },
+            {
+                "channelId": "MOB",
+                "pct": 0.16
+            },
+            {
+                "channelId": "PWEB",
+                "pct": 0.05
+            },
+            {
+                "channelId": "CRM",
+                "pct": 0.03
+            }
+        ],
+        "revenueByType": [
+            {
+                "typeId": "P-BR-C",
+                "label": "P-Br-C",
+                "revenue": 72000000
+            },
+            {
+                "typeId": "P-PL-C",
+                "label": "P-PL-C",
+                "revenue": 66000000
+            },
+            {
+                "typeId": "P-BR-A",
+                "label": "P-Br-A",
+                "revenue": 21000000
+            },
+            {
+                "typeId": "P-PL-A",
+                "label": "P-PL-A",
+                "revenue": 34000000
+            },
+            {
+                "typeId": "N-BR",
+                "label": "N-Br",
+                "revenue": 14500000
+            },
+            {
+                "typeId": "N-PL",
+                "label": "N-PL",
+                "revenue": 25500000
+            },
+            {
+                "typeId": "SIP",
+                "label": "SIP",
+                "revenue": 3500000
+            }
+        ]
+    },
+    "salesInvoiceAnalytics": {
+        "invoiceCountByPurchaseSlab": [
+            {
+                "min": 0,
+                "max": 300,
+                "invoiceCount": 65000
+            },
+            {
+                "min": 300,
+                "max": 500,
+                "invoiceCount": 60000
+            },
+            {
+                "min": 500,
+                "max": 1000,
+                "invoiceCount": 45000
+            },
+            {
+                "min": 1000,
+                "max": 2000,
+                "invoiceCount": 25000
+            },
+            {
+                "min": 2000,
+                "max": 5000,
+                "invoiceCount": 6000
+            },
+            {
+                "min": 5000,
+                "max": null,
+                "invoiceCount": 1200
+            }
+        ],
+        "averageInvoiceCount": [
+            {
+                "period": "daily",
+                "count": 9200
+            },
+            {
+                "period": "weekly",
+                "count": 64500
+            },
+            {
+                "period": "monthly",
+                "count": 283000
+            }
+        ]
+    },
+    "trendPanel": {
+        "monthlyRevenue": [
+            {
+                "month": "2024-01",
+                "revenue": 18500000
+            },
+            {
+                "month": "2024-02",
+                "revenue": 19200000
+            },
+            {
+                "month": "2024-03",
+                "revenue": 21000000
+            },
+            {
+                "month": "2024-04",
+                "revenue": 17800000
+            },
+            {
+                "month": "2024-05",
+                "revenue": 16500000
+            },
+            {
+                "month": "2024-06",
+                "revenue": 18200000
+            },
+            {
+                "month": "2024-07",
+                "revenue": 20500000
+            },
+            {
+                "month": "2024-08",
+                "revenue": 21800000
+            },
+            {
+                "month": "2024-09",
+                "revenue": 17200000
+            },
+            {
+                "month": "2024-10",
+                "revenue": 22000000
+            },
+            {
+                "month": "2024-11",
+                "revenue": 19600000
+            },
+            {
+                "month": "2024-12",
+                "revenue": 23000000
+            }
+        ],
+        "mauDauTrend": [
+            {
+                "month": "2024-01",
+                "mau": 65000,
+                "dau": 18000
+            },
+            {
+                "month": "2024-02",
+                "mau": 69000,
+                "dau": 19500
+            },
+            {
+                "month": "2024-03",
+                "mau": 72000,
+                "dau": 21000
+            },
+            {
+                "month": "2024-04",
+                "mau": 68000,
+                "dau": 19000
+            },
+            {
+                "month": "2024-05",
+                "mau": 63000,
+                "dau": 17500
+            },
+            {
+                "month": "2024-06",
+                "mau": 71000,
+                "dau": 22500
+            },
+            {
+                "month": "2024-07",
+                "mau": 69000,
+                "dau": 20500
+            },
+            {
+                "month": "2024-08",
+                "mau": 76000,
+                "dau": 24000
+            },
+            {
+                "month": "2024-09",
+                "mau": 70000,
+                "dau": 21500
+            },
+            {
+                "month": "2024-10",
+                "mau": 73000,
+                "dau": 23000
+            },
+            {
+                "month": "2024-11",
+                "mau": 69000,
+                "dau": 20000
+            },
+            {
+                "month": "2024-12",
+                "mau": 72000,
+                "dau": 21000
+            }
+        ],
+        "newCustomerAcquisition": [
+            {
+                "month": "2024-01",
+                "count": 12000
+            },
+            {
+                "month": "2024-02",
+                "count": 11800
+            },
+            {
+                "month": "2024-03",
+                "count": 12500
+            },
+            {
+                "month": "2024-04",
+                "count": 11300
+            },
+            {
+                "month": "2024-05",
+                "count": 11000
+            },
+            {
+                "month": "2024-06",
+                "count": 12200
+            },
+            {
+                "month": "2024-07",
+                "count": 12800
+            },
+            {
+                "month": "2024-08",
+                "count": 11900
+            },
+            {
+                "month": "2024-09",
+                "count": 13000
+            },
+            {
+                "month": "2024-10",
+                "count": 12100
+            },
+            {
+                "month": "2024-11",
+                "count": 12400
+            },
+            {
+                "month": "2024-12",
+                "count": 11700
+            }
+        ],
+        "customerChurnPct": [
+            {
+                "month": "2024-01",
+                "churnPct": 32
+            },
+            {
+                "month": "2024-02",
+                "churnPct": 28
+            },
+            {
+                "month": "2024-03",
+                "churnPct": 35
+            },
+            {
+                "month": "2024-04",
+                "churnPct": 31
+            },
+            {
+                "month": "2024-05",
+                "churnPct": 29
+            },
+            {
+                "month": "2024-06",
+                "churnPct": 33
+            },
+            {
+                "month": "2024-07",
+                "churnPct": 30
+            },
+            {
+                "month": "2024-08",
+                "churnPct": 34
+            },
+            {
+                "month": "2024-09",
+                "churnPct": 32
+            },
+            {
+                "month": "2024-10",
+                "churnPct": 29
+            },
+            {
+                "month": "2024-11",
+                "churnPct": 27
+            },
+            {
+                "month": "2024-12",
+                "churnPct": 31
+            }
+        ],
+        "topGainersDecliners": [
+            {
+                "category": "SIP",
+                "monthlyValues": {
+                    "2024-01": 6200,
+                    "2024-02": 15800,
+                    "2024-03": 8400
+                }
+            },
+            {
+                "category": "P-BR-A",
+                "monthlyValues": {
+                    "2024-01": 4800,
+                    "2024-02": 13900,
+                    "2024-03": 7100
+                }
+            }
+        ]
+    },
+    "customerRetention": {
+        "cohorts": [
+            {
+                "joiningMonth": "2023-01",
+                "m0_customers": 36000,
+                "retentionPct": {
+                    "m1": 22,
+                    "m2": 18,
+                    "m3": 14,
+                    "m4": 13,
+                    "m5": 11,
+                    "m6": 10,
+                    "m7": 9,
+                    "m8": 8,
+                    "m9": 7,
+                    "m10": 7,
+                    "m11": 6,
+                    "m12": 5
+                }
+            }
+        ],
+        "volumeMetricsByRetentionMonth": [
+            {
+                "retentionMonth": "M0",
+                "customers": "31,902",
+                "invoices": "35,478",
+                "total": "12,342,344",
+                "pBrC": "4,319,820",
+                "pPlC": "3,702,703",
+                "pBrA": "1,234,234",
+                "pPlA": "1,851,352",
+                "nBr": "617,117",
+                "nPl": "863,964",
+                "sip": "308,559"
+            },
+            {
+                "retentionMonth": "M1",
+                "customers": "33,849",
+                "invoices": "34%",
+                "total": "46%",
+                "pBrC": "32%",
+                "pPlC": "30%",
+                "pBrA": "21%",
+                "pPlA": "46%",
+                "nBr": "31%",
+                "nPl": "43%",
+                "sip": "42%"
+            },
+            {
+                "retentionMonth": "M2",
+                "customers": "32,538",
+                "invoices": "28%",
+                "total": "15%",
+                "pBrC": "32%",
+                "pPlC": "21%",
+                "pBrA": "38%",
+                "pPlA": "19%",
+                "nBr": "28%",
+                "nPl": "26%",
+                "sip": "26%"
+            },
+            {
+                "retentionMonth": "M3",
+                "customers": "25,301",
+                "invoices": "40%",
+                "total": "36%",
+                "pBrC": "38%",
+                "pPlC": "47%",
+                "pBrA": "10%",
+                "pPlA": "18%",
+                "nBr": "31%",
+                "nPl": "19%",
+                "sip": "31%"
+            },
+            {
+                "retentionMonth": "M4",
+                "customers": "36,614",
+                "invoices": "34%",
+                "total": "31%",
+                "pBrC": "18%",
+                "pPlC": "23%",
+                "pBrA": "31%",
+                "pPlA": "21%",
+                "nBr": "17%",
+                "nPl": "44%",
+                "sip": "10%"
+            },
+            {
+                "retentionMonth": "M5",
+                "customers": "41,341",
+                "invoices": "35%",
+                "total": "29%",
+                "pBrC": "47%",
+                "pPlC": "20%",
+                "pBrA": "28%",
+                "pPlA": "39%",
+                "nBr": "12%",
+                "nPl": "29%",
+                "sip": "10%"
+            },
+            {
+                "retentionMonth": "M6",
+                "customers": "31,516",
+                "invoices": "12%",
+                "total": "49%",
+                "pBrC": "25%",
+                "pPlC": "16%",
+                "pBrA": "11%",
+                "pPlA": "32%",
+                "nBr": "44%",
+                "nPl": "37%",
+                "sip": "24%"
+            },
+            {
+                "retentionMonth": "M7",
+                "customers": "42,858",
+                "invoices": "20%",
+                "total": "42%",
+                "pBrC": "14%",
+                "pPlC": "45%",
+                "pBrA": "46%",
+                "pPlA": "35%",
+                "nBr": "47%",
+                "nPl": "44%",
+                "sip": "26%"
+            },
+            {
+                "retentionMonth": "M8",
+                "customers": "42,234",
+                "invoices": "27%",
+                "total": "46%",
+                "pBrC": "36%",
+                "pPlC": "28%",
+                "pBrA": "49%",
+                "pPlA": "29%",
+                "nBr": "27%",
+                "nPl": "31%",
+                "sip": "13%"
+            },
+            {
+                "retentionMonth": "M9",
+                "customers": "40,076",
+                "invoices": "37%",
+                "total": "38%",
+                "pBrC": "19%",
+                "pPlC": "36%",
+                "pBrA": "42%",
+                "pPlA": "18%",
+                "nBr": "39%",
+                "nPl": "14%",
+                "sip": "45%"
+            },
+            {
+                "retentionMonth": "M10",
+                "customers": "39,638",
+                "invoices": "47%",
+                "total": "16%",
+                "pBrC": "36%",
+                "pPlC": "45%",
+                "pBrA": "12%",
+                "pPlA": "29%",
+                "nBr": "30%",
+                "nPl": "43%",
+                "sip": "26%"
+            },
+            {
+                "retentionMonth": "M11",
+                "customers": "34,734",
+                "invoices": "45%",
+                "total": "14%",
+                "pBrC": "26%",
+                "pPlC": "28%",
+                "pBrA": "25%",
+                "pPlA": "18%",
+                "nBr": "48%",
+                "nPl": "43%",
+                "sip": "38%"
+            },
+            {
+                "retentionMonth": "M12",
+                "customers": "32,221",
+                "invoices": "15%",
+                "total": "30%",
+                "pBrC": "26%",
+                "pPlC": "49%",
+                "pBrA": "44%",
+                "pPlA": "41%",
+                "nBr": "45%",
+                "nPl": "12%",
+                "sip": "13%"
+            }
+        ]
+    }
+}
