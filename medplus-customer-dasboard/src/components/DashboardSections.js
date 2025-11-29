@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Card, Table } from 'react-bootstrap';
+import { Row, Col, Table } from 'react-bootstrap';
 import 'chart.js/auto';
 import { Bar, Pie, Line } from 'react-chartjs-2';
 
@@ -442,23 +442,23 @@ const DashboardSections = ({ data }) => {
                             </thead>
                             <tbody>
                                 {customerRetention.volumeMetricsByRetentionMonth.map((row, index) => {
-                                        const getRetentionField = (row, key) => {
-                                            if (!row) return undefined;
-                                            if (key in row) return row[key];
-                                            // fallback to nested categoryRevenueSplit for category keys
-                                            if (row.categoryRevenueSplit) {
-                                                const map = {
-                                                    pBrC: 'P_BR_C', pPlC: 'P_PL_C', pBrA: 'P_BR_A', pPlA: 'P_PL_A', nBr: 'N_BR', nPl: 'N_PL', sip: 'SIP'
-                                                };
-                                                const mapKey = map[key];
-                                                if (mapKey && row.categoryRevenueSplit[mapKey] !== undefined) return row.categoryRevenueSplit[mapKey];
-                                            }
-                                            // Try common aliases
-                                            if (key === 'total' && row.totalRevenue !== undefined) return row.totalRevenue;
-                                            return undefined;
-                                        };
+                                    const getRetentionField = (row, key) => {
+                                        if (!row) return undefined;
+                                        if (key in row) return row[key];
+                                        // fallback to nested categoryRevenueSplit for category keys
+                                        if (row.categoryRevenueSplit) {
+                                            const map = {
+                                                pBrC: 'P_BR_C', pPlC: 'P_PL_C', pBrA: 'P_BR_A', pPlA: 'P_PL_A', nBr: 'N_BR', nPl: 'N_PL', sip: 'SIP'
+                                            };
+                                            const mapKey = map[key];
+                                            if (mapKey && row.categoryRevenueSplit[mapKey] !== undefined) return row.categoryRevenueSplit[mapKey];
+                                        }
+                                        // Try common aliases
+                                        if (key === 'total' && row.totalRevenue !== undefined) return row.totalRevenue;
+                                        return undefined;
+                                    };
 
-                                        const getCellStyle = (val) => {
+                                    const getCellStyle = (val) => {
                                         if (!val) return {};
                                         if (typeof val === 'string' && val.includes('%')) {
                                             const num = parseInt(val);
