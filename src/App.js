@@ -17,10 +17,17 @@ function App() {
   const [activeSection, setActiveSection] = useState('section1');
 
   // Filter States
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+
+  // Filter States
   const [selectedState, setSelectedState] = useState('');
   const [selectedArea, setSelectedArea] = useState('');
   const [selectedSupervisor, setSelectedSupervisor] = useState('');
   const [selectedManager, setSelectedManager] = useState('');
+
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+  const toggleFilters = () => setIsFiltersOpen(!isFiltersOpen);
 
   // Derived Data
   const states = useMemo(() => Object.keys(stateAreaData), []);
@@ -154,13 +161,22 @@ function App() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+    // Close sidebar on mobile when a section is clicked
+    if (window.innerWidth <= 768) {
+      setIsSidebarOpen(false);
+    }
   };
 
   return (
     <div className="dashboard-container">
-      <Header />
+      <Header toggleSidebar={toggleSidebar} />
       <div className="main-content-wrapper">
-        <Sidebar activeSection={activeSection} scrollToSection={scrollToSection} />
+        <Sidebar
+          activeSection={activeSection}
+          scrollToSection={scrollToSection}
+          isOpen={isSidebarOpen}
+          toggleSidebar={toggleSidebar}
+        />
         <div className="content-area">
           <FilterBar
             states={states}
@@ -175,6 +191,8 @@ function App() {
             selectedManager={selectedManager}
             onSupervisorChange={handleSupervisorChange}
             onManagerChange={handleManagerChange}
+            isOpen={isFiltersOpen}
+            toggleFilters={toggleFilters}
           />
           <DashboardSections data={currentData} />
         </div>
