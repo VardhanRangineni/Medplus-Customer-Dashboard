@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import confetti from 'canvas-confetti';
 import { Row, Col, Table } from 'react-bootstrap';
 import 'chart.js/auto';
 import { Bar, Pie, Line } from 'react-chartjs-2';
 
 
-const DashboardSections = ({ data }) => {
+const DashboardSections = ({ data, selectedState }) => {
+    const revenueCardRef = useRef(null);
+
+    useEffect(() => {
+        if (selectedState === 'Telangana' && revenueCardRef.current) {
+            const rect = revenueCardRef.current.getBoundingClientRect();
+            const x = (rect.left + rect.width / 2) / window.innerWidth;
+            const y = (rect.top + rect.height / 2) / window.innerHeight;
+
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { x, y }
+            });
+        }
+    }, [selectedState]);
     if (!data) return <div className="p-5 text-center">Loading data...</div>;
 
     const { kpis, customerSegmentation, salesInvoiceAnalytics, trendPanel, customerRetention } = data;
@@ -205,7 +221,7 @@ const DashboardSections = ({ data }) => {
                         </div>
                     </Col>
                     <Col md={3}>
-                        <div className="kpi-card">
+                        <div className="kpi-card" ref={revenueCardRef}>
                             <div className="kpi-title">Total Revenue</div>
                             <div className="kpi-value">₹{(kpis.revenue / 10000000).toFixed(1)}Cr</div>
                             <div className="kpi-subtext">Invoices: {kpis.invoices.toLocaleString()}</div>

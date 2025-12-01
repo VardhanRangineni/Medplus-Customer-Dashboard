@@ -194,7 +194,7 @@ function App() {
             isOpen={isFiltersOpen}
             toggleFilters={toggleFilters}
           />
-          <DashboardSections data={currentData} />
+          <DashboardSections data={currentData} selectedState={selectedState} />
         </div>
       </div>
     </div>
