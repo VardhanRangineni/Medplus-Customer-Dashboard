@@ -12,30 +12,30 @@ const Sidebar = ({ activeSection, scrollToSection, isOpen, toggleSidebar }) => {
                 <div
                     className={`nav-item ${activeSection === 'section1' ? 'active' : ''}`}
                     onClick={() => scrollToSection('section1')}
-                    title="KPIs & Segmentation"
                 >
                     <FaChartPie />
+                    <span>KPIs & Segmentation</span>
                 </div>
                 <div
                     className={`nav-item ${activeSection === 'section2' ? 'active' : ''}`}
                     onClick={() => scrollToSection('section2')}
-                    title="Sales & Invoice Analytics"
                 >
                     <FaFileInvoiceDollar />
+                    <span>Sales & Invoices</span>
                 </div>
                 <div
                     className={`nav-item ${activeSection === 'section3' ? 'active' : ''}`}
                     onClick={() => scrollToSection('section3')}
-                    title="Trend Panel"
                 >
                     <FaChartLine />
+                    <span>Trend Analysis</span>
                 </div>
                 <div
                     className={`nav-item ${activeSection === 'section4' ? 'active' : ''}`}
                     onClick={() => scrollToSection('section4')}
-                    title="Customer Retention"
                 >
                     <FaUsers />
+                    <span>Customer Retention</span>
                 </div>
             </div>
         </>

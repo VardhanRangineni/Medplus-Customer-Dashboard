@@ -35,16 +35,31 @@ const DashboardSections = ({ data, selectedState }) => {
                 labels: {
                     usePointStyle: true,
                     padding: 20,
-                    font: { family: 'Inter', size: 11 }
+                    font: { family: 'Inter', size: 12 },
+                    color: '#64748b' // Slate 500
                 }
             },
             title: {
                 display: false,
             },
+            tooltip: {
+                backgroundColor: 'rgba(15, 23, 42, 0.9)', // Slate 900
+                titleFont: { family: 'Outfit', size: 13 },
+                bodyFont: { family: 'Inter', size: 12 },
+                padding: 10,
+                cornerRadius: 8,
+                displayColors: true
+            }
         },
         scales: {
-            x: { grid: { display: false } },
-            y: { grid: { borderDash: [5, 5] } }
+            x: {
+                grid: { display: false },
+                ticks: { font: { family: 'Inter', size: 11 }, color: '#94a3b8' }
+            },
+            y: {
+                grid: { borderDash: [5, 5], color: '#e2e8f0' },
+                ticks: { font: { family: 'Inter', size: 11 }, color: '#94a3b8' }
+            }
         }
     };
 
@@ -58,14 +73,28 @@ const DashboardSections = ({ data, selectedState }) => {
                 labels: {
                     usePointStyle: true,
                     padding: 20,
-                    font: { family: 'Inter', size: 11 }
+                    font: { family: 'Inter', size: 12 },
+                    color: '#64748b'
                 }
             },
             title: { display: false },
+            tooltip: {
+                backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                titleFont: { family: 'Outfit', size: 13 },
+                bodyFont: { family: 'Inter', size: 12 },
+                padding: 10,
+                cornerRadius: 8
+            }
         },
         scales: {
-            x: { grid: { borderDash: [5, 5] } },
-            y: { grid: { display: false } }
+            x: {
+                grid: { borderDash: [5, 5], color: '#e2e8f0' },
+                ticks: { font: { family: 'Inter', size: 11 }, color: '#94a3b8' }
+            },
+            y: {
+                grid: { display: false },
+                ticks: { font: { family: 'Inter', size: 11 }, color: '#94a3b8' }
+            }
         }
     };
 
@@ -75,12 +104,41 @@ const DashboardSections = ({ data, selectedState }) => {
         plugins: {
             legend: {
                 position: 'right',
-                labels: { usePointStyle: true, font: { family: 'Inter', size: 11 } }
+                labels: {
+                    usePointStyle: true,
+                    font: { family: 'Inter', size: 12 },
+                    color: '#64748b',
+                    padding: 15
+                }
+            },
+            tooltip: {
+                backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                bodyFont: { family: 'Inter', size: 12 },
+                padding: 10,
+                cornerRadius: 8
+            }
+        },
+        elements: {
+            arc: {
+                borderWidth: 2,
+                borderColor: '#ffffff'
             }
         }
     };
 
     // --- Data Preparation ---
+
+    // Colors
+    const colors = {
+        primary: '#4f46e5', // Indigo 600
+        secondary: '#818cf8', // Indigo 400
+        success: '#10b981', // Emerald 500
+        warning: '#f59e0b', // Amber 500
+        danger: '#ef4444', // Red 500
+        info: '#06b6d4', // Cyan 500
+        purple: '#7c3aed', // Violet 600
+        slate: '#64748b' // Slate 500
+    };
 
     // Section 1: Customer Segmentation
     const purchaseValueData = {
@@ -88,9 +146,9 @@ const DashboardSections = ({ data, selectedState }) => {
         datasets: [{
             label: 'Customer Count',
             data: customerSegmentation.byPurchaseValue.map(item => item.customerCount),
-            backgroundColor: '#0d6efd',
-            borderRadius: 4,
-            barThickness: 20,
+            backgroundColor: colors.primary,
+            borderRadius: 6,
+            barThickness: 24,
         }],
     };
 
@@ -98,8 +156,8 @@ const DashboardSections = ({ data, selectedState }) => {
         labels: customerSegmentation.byChannel.map(item => item.label),
         datasets: [{
             data: customerSegmentation.byChannel.map(item => item.pct * 100),
-            backgroundColor: ['#0d6efd', '#198754', '#ffc107', '#0dcaf0', '#dc3545'],
-            borderWidth: 0,
+            backgroundColor: [colors.primary, colors.success, colors.warning, colors.info, colors.danger],
+            borderWidth: 2,
         }],
     };
 
@@ -108,8 +166,8 @@ const DashboardSections = ({ data, selectedState }) => {
         labels: customerSegmentation.revenueByChannel.map(item => item.channelId),
         datasets: [{
             data: customerSegmentation.revenueByChannel.map(item => item.pct * 100),
-            backgroundColor: ['#0d6efd', '#6610f2', '#198754', '#0dcaf0', '#dc3545'],
-            borderWidth: 0,
+            backgroundColor: [colors.primary, colors.purple, colors.success, colors.info, colors.danger],
+            borderWidth: 2,
         }]
     };
 
@@ -118,9 +176,9 @@ const DashboardSections = ({ data, selectedState }) => {
         datasets: [{
             label: 'Revenue',
             data: customerSegmentation.revenueByType.map(item => item.revenue),
-            backgroundColor: '#20c997',
-            borderRadius: 4,
-            barThickness: 15,
+            backgroundColor: colors.success,
+            borderRadius: 6,
+            barThickness: 18,
         }]
     };
 
@@ -129,9 +187,9 @@ const DashboardSections = ({ data, selectedState }) => {
         datasets: [{
             label: 'Invoice Count',
             data: salesInvoiceAnalytics.invoiceCountByPurchaseSlab.map(item => item.invoiceCount),
-            backgroundColor: '#0d6efd',
-            borderRadius: 4,
-            barThickness: 20,
+            backgroundColor: colors.primary,
+            borderRadius: 6,
+            barThickness: 24,
         }]
     };
 
@@ -140,9 +198,9 @@ const DashboardSections = ({ data, selectedState }) => {
         datasets: [{
             label: 'Count',
             data: salesInvoiceAnalytics.averageInvoiceCount.map(item => item.count),
-            backgroundColor: '#0d6efd',
-            borderRadius: 4,
-            barThickness: 30,
+            backgroundColor: colors.secondary,
+            borderRadius: 6,
+            barThickness: 32,
         }]
     };
 
@@ -152,10 +210,15 @@ const DashboardSections = ({ data, selectedState }) => {
         datasets: [{
             label: 'Revenue',
             data: trendPanel.monthlyRevenue.map(item => item.revenue),
-            borderColor: '#0d6efd',
-            backgroundColor: 'rgba(13, 110, 253, 0.1)',
+            borderColor: colors.primary,
+            backgroundColor: 'rgba(79, 70, 229, 0.1)', // Indigo 600 with opacity
             tension: 0.4,
             fill: true,
+            pointBackgroundColor: '#ffffff',
+            pointBorderColor: colors.primary,
+            pointBorderWidth: 2,
+            pointRadius: 4,
+            pointHoverRadius: 6
         }]
     };
 
@@ -165,14 +228,20 @@ const DashboardSections = ({ data, selectedState }) => {
             {
                 label: 'MAU',
                 data: trendPanel.mauDauTrend.map(item => item.mau),
-                borderColor: '#6610f2',
+                borderColor: colors.purple,
                 tension: 0.4,
+                pointBackgroundColor: '#ffffff',
+                pointBorderColor: colors.purple,
+                pointBorderWidth: 2
             },
             {
                 label: 'DAU',
                 data: trendPanel.mauDauTrend.map(item => item.dau),
-                borderColor: '#0dcaf0',
+                borderColor: colors.info,
                 tension: 0.4,
+                pointBackgroundColor: '#ffffff',
+                pointBorderColor: colors.info,
+                pointBorderWidth: 2
             }
         ]
     };
@@ -182,8 +251,11 @@ const DashboardSections = ({ data, selectedState }) => {
         datasets: [{
             label: 'New Customers',
             data: trendPanel.newCustomerAcquisition.map(item => item.count),
-            borderColor: '#198754',
+            borderColor: colors.success,
             tension: 0.4,
+            pointBackgroundColor: '#ffffff',
+            pointBorderColor: colors.success,
+            pointBorderWidth: 2
         }]
     };
 
@@ -192,8 +264,11 @@ const DashboardSections = ({ data, selectedState }) => {
         datasets: [{
             label: 'Churn %',
             data: trendPanel.customerChurnPct.map(item => item.churnPct),
-            borderColor: '#dc3545',
+            borderColor: colors.danger,
             tension: 0.4,
+            pointBackgroundColor: '#ffffff',
+            pointBorderColor: colors.danger,
+            pointBorderWidth: 2
         }]
     };
 
@@ -206,7 +281,7 @@ const DashboardSections = ({ data, selectedState }) => {
                 <h4 className="section-title">KPIs & Customer Segmentation</h4>
 
                 {/* KPI Cards */}
-                <Row className="g-3 mb-4">
+                <Row className="g-4 mb-4">
                     <Col md={3}>
                         <div className="kpi-card">
                             <div className="kpi-title">DAU / MAU Ratio</div>
@@ -235,7 +310,7 @@ const DashboardSections = ({ data, selectedState }) => {
                     </Col>
                 </Row>
 
-                <Row className="g-3">
+                <Row className="g-4">
                     <Col md={4}>
                         <div className="chart-container">
                             <div className="chart-title">Customer Split by Purchase Value</div>
@@ -281,7 +356,7 @@ const DashboardSections = ({ data, selectedState }) => {
             {/* Section 2: Sales & Invoice Analytics */}
             <div id="section2" className="dashboard-section">
                 <h4 className="section-title">Sales & Invoice Analytics</h4>
-                <Row className="g-3">
+                <Row className="g-4">
                     <Col md={6}>
                         <div className="chart-container">
                             <div className="chart-title">Revenue Split by Channel</div>
@@ -320,7 +395,7 @@ const DashboardSections = ({ data, selectedState }) => {
             {/* Section 3: Trend Panel */}
             <div id="section3" className="dashboard-section">
                 <h4 className="section-title">Trend Panel</h4>
-                <Row className="g-3">
+                <Row className="g-4">
                     <Col md={6}>
                         <div className="chart-container">
                             <div className="chart-title">Monthly Revenue Trend</div>
@@ -387,50 +462,50 @@ const DashboardSections = ({ data, selectedState }) => {
                                 <tr>
                                     <td style={{ fontWeight: 'bold' }}>Jan-23</td>
                                     <td className="bg-success text-white" style={{ opacity: 1 }}>100%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.2)' }}>14%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.5)' }}>50%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.4)' }}>39%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.4)' }}>40%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.5)' }}>47%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.3)' }}>33%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.2)' }}>24%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.3)' }}>31%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.1)' }}>14%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.4)' }}>38%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.4)' }}>41%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.1)' }}>11%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.2)' }}>14%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.5)' }}>50%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.4)' }}>39%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.4)' }}>40%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.5)' }}>47%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.3)' }}>33%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.2)' }}>24%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.3)' }}>31%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.1)' }}>14%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.4)' }}>38%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.4)' }}>41%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.1)' }}>11%</td>
                                 </tr>
                                 <tr>
                                     <td style={{ fontWeight: 'bold' }}>Feb-23</td>
                                     <td className="bg-success text-white">100%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.2)' }}>17%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.2)' }}>15%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.3)' }}>30%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.3)' }}>31%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.2)' }}>22%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.4)' }}>39%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.2)' }}>20%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.2)' }}>23%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.1)' }}>10%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.2)' }}>16%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.5)' }}>45%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.3)' }}>27%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.2)' }}>17%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.2)' }}>15%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.3)' }}>30%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.3)' }}>31%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.2)' }}>22%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.4)' }}>39%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.2)' }}>20%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.2)' }}>23%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.1)' }}>10%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.2)' }}>16%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.5)' }}>45%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.3)' }}>27%</td>
                                 </tr>
                                 <tr>
                                     <td style={{ fontWeight: 'bold' }}>Mar-23</td>
                                     <td className="bg-success text-white">100%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.3)' }}>30%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.4)' }}>39%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.4)' }}>41%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.3)' }}>25%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.4)' }}>42%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.3)' }}>29%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.2)' }}>17%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.2)' }}>18%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.5)' }}>48%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.4)' }}>43%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.2)' }}>19%</td>
-                                    <td style={{ backgroundColor: 'rgba(25, 135, 84, 0.2)' }}>20%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.3)' }}>30%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.4)' }}>39%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.4)' }}>41%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.3)' }}>25%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.4)' }}>42%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.3)' }}>29%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.2)' }}>17%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.2)' }}>18%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.5)' }}>48%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.4)' }}>43%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.2)' }}>19%</td>
+                                    <td style={{ backgroundColor: 'rgba(16, 185, 129, 0.2)' }}>20%</td>
                                 </tr>
                             </tbody>
                         </Table>
@@ -480,7 +555,7 @@ const DashboardSections = ({ data, selectedState }) => {
                                             const num = parseInt(val);
                                             // Simple opacity scale for green background
                                             const opacity = num / 100;
-                                            return { backgroundColor: `rgba(25, 135, 84, ${opacity})` };
+                                            return { backgroundColor: `rgba(16, 185, 129, ${opacity})` };
                                         }
                                         return {};
                                     };
