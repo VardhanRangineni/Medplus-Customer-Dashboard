@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Row, Col } from 'react-bootstrap';
+import { Row, Col, Dropdown } from 'react-bootstrap';
 
 const FilterBar = ({
   states = [],
@@ -21,7 +21,7 @@ const FilterBar = ({
     backgroundColor: 'var(--surface-color)',
     borderRadius: 'var(--border-radius-lg)',
     boxShadow: 'var(--card-shadow)',
-    border: '1px solid transparent', // Ready for potential border color
+    border: '1px solid transparent',
     marginBottom: '1.5rem',
     padding: '1.5rem'
   };
@@ -32,17 +32,43 @@ const FilterBar = ({
     color: 'var(--text-secondary)',
     marginBottom: '0.5rem',
     textTransform: 'uppercase',
-    letterSpacing: '0.05em'
+    letterSpacing: '0.05em',
+    display: 'block'
   };
 
-  const selectStyle = {
-    backgroundColor: '#f8fafc', // Slate 50
-    border: '1px solid #e2e8f0', // Slate 200
-    borderRadius: 'var(--border-radius-sm)',
-    color: 'var(--text-primary)',
-    fontSize: '0.9rem',
-    padding: '0.5rem 0.75rem',
-    boxShadow: 'none'
+  const CustomDropdown = ({ label, value, options, onSelect, placeholder, disabled, valueKey = 'value', labelKey = 'label' }) => {
+    // Helper to find label for current value
+    const currentLabel = options.find(opt => {
+      const optVal = typeof opt === 'object' ? opt[valueKey] : opt;
+      return optVal === value;
+    });
+
+    const displayValue = currentLabel
+      ? (typeof currentLabel === 'object' ? currentLabel[labelKey] : currentLabel)
+      : placeholder;
+
+    return (
+      <div className="custom-dropdown">
+        <label style={labelStyle}>{label}</label>
+        <Dropdown onSelect={onSelect}>
+          <Dropdown.Toggle disabled={disabled} variant="light" className="w-100 justify-content-between align-items-center d-flex">
+            {value ? displayValue : placeholder}
+          </Dropdown.Toggle>
+          <Dropdown.Menu className="w-100">
+            <Dropdown.Item eventKey="">{placeholder}</Dropdown.Item>
+            {options.map((opt, idx) => {
+              const optVal = typeof opt === 'object' ? opt[valueKey] : opt;
+              const optLabel = typeof opt === 'object' ? opt[labelKey] : opt;
+              return (
+                <Dropdown.Item key={idx} eventKey={optVal} active={value === optVal}>
+                  {optLabel}
+                </Dropdown.Item>
+              );
+            })}
+          </Dropdown.Menu>
+        </Dropdown>
+      </div>
+    );
   };
 
   return (
@@ -58,71 +84,47 @@ const FilterBar = ({
       <div className={`${isOpen ? 'd-block' : 'd-none d-md-block'}`}>
         <Row className="g-3">
           <Col md={3}>
-            <Form.Group controlId="filterState">
-              <Form.Label style={labelStyle}>State</Form.Label>
-              <Form.Select
-                size="sm"
-                value={selectedState}
-                onChange={(e) => onStateChange(e.target.value)}
-                style={selectStyle}
-              >
-                <option value="">Select State</option>
-                {states.map(state => (
-                  <option key={state} value={state}>{state}</option>
-                ))}
-              </Form.Select>
-            </Form.Group>
+            <CustomDropdown
+              label="State"
+              value={selectedState}
+              options={states}
+              onSelect={onStateChange}
+              placeholder="Select State"
+            />
           </Col>
           <Col md={3}>
-            <Form.Group controlId="filterArea">
-              <Form.Label style={labelStyle}>Area</Form.Label>
-              <Form.Select
-                size="sm"
-                value={selectedArea}
-                onChange={(e) => onAreaChange(e.target.value)}
-                disabled={!selectedState}
-                style={selectStyle}
-              >
-                <option value="">Select Area</option>
-                {areas.map(area => (
-                  <option key={area} value={area}>{area}</option>
-                ))}
-              </Form.Select>
-            </Form.Group>
+            <CustomDropdown
+              label="Area"
+              value={selectedArea}
+              options={areas}
+              onSelect={onAreaChange}
+              placeholder="Select Area"
+              disabled={!selectedState}
+            />
           </Col>
           <Col md={3}>
-            <Form.Group controlId="filterSupervisor">
-              <Form.Label style={labelStyle}>Supervisor</Form.Label>
-              <Form.Select
-                size="sm"
-                value={selectedSupervisor}
-                onChange={(e) => onSupervisorChange(e.target.value)}
-                disabled={!selectedState || supervisors.length === 0}
-                style={selectStyle}
-              >
-                <option value="">All Supervisors</option>
-                {supervisors.map(s => (
-                  <option key={s.id} value={s.id}>{s.label}</option>
-                ))}
-              </Form.Select>
-            </Form.Group>
+            <CustomDropdown
+              label="Supervisor"
+              value={selectedSupervisor}
+              options={supervisors}
+              onSelect={onSupervisorChange}
+              placeholder="All Supervisors"
+              disabled={!selectedState || supervisors.length === 0}
+              valueKey="id"
+              labelKey="label"
+            />
           </Col>
           <Col md={3}>
-            <Form.Group controlId="filterManager">
-              <Form.Label style={labelStyle}>Manager</Form.Label>
-              <Form.Select
-                size="sm"
-                value={selectedManager}
-                onChange={(e) => onManagerChange(e.target.value)}
-                disabled={!selectedState || managers.length === 0}
-                style={selectStyle}
-              >
-                <option value="">All Managers</option>
-                {managers.map(m => (
-                  <option key={m.id} value={m.id}>{m.label}</option>
-                ))}
-              </Form.Select>
-            </Form.Group>
+            <CustomDropdown
+              label="Manager"
+              value={selectedManager}
+              options={managers}
+              onSelect={onManagerChange}
+              placeholder="All Managers"
+              disabled={!selectedState || managers.length === 0}
+              valueKey="id"
+              labelKey="label"
+            />
           </Col>
         </Row>
       </div>

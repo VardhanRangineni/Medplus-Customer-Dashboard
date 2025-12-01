@@ -34,7 +34,7 @@ function App() {
 
   const areas = useMemo(() => {
     if (!selectedState) return [];
-    return Object.keys(stateAreaData[selectedState] || {});
+    return Object.keys(stateAreaData[selectedState] || {}).filter(key => !key.startsWith('_'));
   }, [selectedState]);
 
   const supervisors = useMemo(() => {
