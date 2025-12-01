@@ -1,7 +1,7 @@
 # MedPlus Customer Dashboard | Technical Documentation
 
 **Version:** 2.0.0  
-**Status:** Production Ready  
+**Status:** Waiting for the review  
 **Last Updated:** December 2025
 
 ---
