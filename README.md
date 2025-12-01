@@ -24,7 +24,7 @@ graph TD
     StateMgr -->|Triggers| Aggregator[Data Aggregator Utility]
     
     subgraph Data Layer
-        RawData[JSON Data Source] --> Aggregator
+        MockData[Mock Data Provider] --> Aggregator
     end
     
     Aggregator -->|Returns Aggregated Object| App
@@ -45,39 +45,20 @@ graph TD
 
 ---
 
-## 3. Data Model & Schema
+## 3. Data Integration Strategy
 
-The application consumes a hierarchical JSON dataset designed for efficient client-side traversal.
+The application is architected to be agnostic of the data source, currently utilizing a **Mock Data Layer** for development and prototyping purposes. This allows for rapid UI/UX iteration without backend dependencies.
 
-### 3.1 Hierarchy Definition
-The data is structured as a nested dictionary to allow O(1) access times for specific nodes.
+### 3.1 Current Implementation (Mock Mode)
+*   **Source**: Static JSON files located in `src/Assets/`.
+*   **Processing**: Client-side aggregation via `src/utils/dataAggregator.js`.
+*   **Purpose**: Simulates the hierarchical data structure (State -> Area -> Supervisor) to validate frontend logic and visualization components.
 
-```json
-{
-  "StateName": {
-    "AreaName": {
-      "supervisor": "String (Name)",
-      "supervisorId": "String (ID)",
-      "manager": "String (Name)",
-      "managerId": "String (ID)",
-      "kpis": {
-        "revenue": "Number",
-        "invoices": "Number",
-        "activeUsers": "Number"
-      },
-      "customerRetention": { ... },
-      "trendPanel": { ... }
-    }
-  }
-}
-```
-
-### 3.2 Aggregation Logic (`src/utils/dataAggregator.js`)
-The `aggregateAreas` function is the core computational engine. It performs the following operations:
-1.  **Deep Cloning**: Creates a safe copy of the template structure.
-2.  **Vector Addition**: Sums KPI metrics across all selected areas.
-3.  **Array Reduction**: Merges time-series data (e.g., Monthly Revenue) by index.
-4.  **Cohort Synthesis**: Calculates weighted averages for retention percentages across multiple cohorts.
+### 3.2 Future Backend Integration
+The production roadmap involves replacing the mock layer with a robust RESTful API or GraphQL endpoint.
+*   **API Pattern**: The frontend expects a JSON payload matching the component interfaces.
+*   **Server-Side Aggregation**: Heavy computational tasks (summing KPIs, cohort analysis) will be offloaded to the backend to improve performance at scale.
+*   **Authentication**: JWT-based authentication will be implemented to secure data access based on user roles (e.g., Manager vs. Regional Director).
 
 ---
 
@@ -108,11 +89,48 @@ Provides the interface for data slicing.
 
 ---
 
-## 5. Design System Specifications
+## 5. Functional Modules
+
+The dashboard is divided into four primary analytical sections, each targeting a specific aspect of business performance.
+
+### 5.1 KPIs & Customer Segmentation
+This section provides a high-level health check of the business.
+*   **Key Performance Indicators (KPIs)**:
+    *   **DAU/MAU Ratio**: Measures user engagement stickiness (Target: >25%).
+    *   **Today's Active Users**: Real-time count of unique users active in the last 24 hours.
+    *   **Total Revenue**: Aggregate revenue with a "Confetti" celebration effect when targets are met.
+    *   **MTD Pharma Plans**: Month-to-date sales count of pharmaceutical plans.
+*   **Visualizations**:
+    *   **Customer Split by Purchase Value** (Bar Chart): Segments users based on their spending tiers.
+    *   **Customer Split by Channel** (Pie Chart): Analyzes the distribution of users across different acquisition channels (Online, In-store, App).
+    *   **Top Customers** (Table): A leaderboard of high-value clients sorted by purchase volume.
+
+### 5.2 Sales & Invoice Analytics
+Focuses on financial metrics and transaction behaviors.
+*   **Revenue Split by Channel** (Pie Chart): Break down of total revenue by sales channel.
+*   **Revenue Split by Type** (Bar Chart): Categorizes revenue into different product or service types.
+*   **Invoice Split by Purchase Slab** (Bar Chart): Shows the distribution of invoice values, helping identify average basket sizes.
+*   **Average Invoice Count** (Bar Chart): Tracks the frequency of invoicing over time.
+
+### 5.3 Trend Panel
+Provides time-series analysis to identify growth patterns and anomalies.
+*   **Monthly Revenue Trend** (Line Chart): Visualizes revenue trajectory with a filled area chart for better impact.
+*   **MAU & DAU Trends** (Multi-Line Chart): Overlays Monthly Active Users against Daily Active Users to track engagement growth.
+*   **New Customer Acquisition** (Line Chart): Tracks the rate of new user onboarding.
+*   **Customer Churn %** (Line Chart): Monitors the percentage of users leaving the platform, highlighting retention risks.
+
+### 5.4 Customer Retention
+A deep dive into user lifecycle and loyalty.
+*   **Cohort Analysis** (Heatmap Table): Tracks user retention rates over a 12-month period (M0 to M12). Cells are color-coded (Green opacity) to visually indicate retention strength.
+*   **Retention by Category** (Table): Breaks down retention metrics by specific product categories (e.g., Pharma Brand, Pharma Generic, Surgical), allowing for granular analysis of product stickiness.
+
+---
+
+## 6. Design System Specifications
 
 The UI is built upon a strict set of design tokens defined in `src/styles/dashboard.css`.
 
-### 5.1 Color Theory
+### 6.1 Color Theory
 | Token | Hex Value | Usage |
 |-------|-----------|-------|
 | `--primary-color` | `#4f46e5` | Primary actions, active states, key data points |
@@ -120,28 +138,28 @@ The UI is built upon a strict set of design tokens defined in `src/styles/dashbo
 | `--background-color` | `#f8fafc` | Global application background |
 | `--text-secondary` | `#64748b` | Labels, secondary metadata |
 
-### 5.2 Typography
+### 6.2 Typography
 *   **Display Font**: `Outfit` (Weights: 500, 600, 700) - Used for KPIs and Section Headers.
 *   **Body Font**: `Inter` (Weights: 400, 500) - Used for tables, charts, and controls.
 
 ---
 
-## 6. Development Standards
+## 7. Development Standards
 
-### 6.1 Code Style
+### 7.1 Code Style
 *   **Functional Programming**: Prefer pure functions for logic (e.g., aggregators).
 *   **Hooks Pattern**: Use `useMemo` for expensive calculations to ensure 60fps rendering.
 *   **Component Composition**: Break down complex UIs into smaller, reusable atoms.
 
-### 6.2 Performance Optimization
+### 7.2 Performance Optimization
 *   **Memoization**: The `areas`, `supervisors`, and `managers` lists are memoized to prevent unnecessary recalculations during re-renders.
 *   **Lazy Evaluation**: Data aggregation only runs when filter dependencies change.
 
 ---
 
-## 7. Setup & Deployment
+## 8. Setup & Deployment
 
-### 7.1 Local Development Environment
+### 8.1 Local Development Environment
 ```bash
 # Clone repository
 git clone <repo-url>
@@ -153,7 +171,7 @@ npm install
 npm start
 ```
 
-### 7.2 Production Build
+### 8.2 Production Build
 The application is optimized for static hosting (S3, Vercel, Netlify).
 ```bash
 # Generate production bundle
