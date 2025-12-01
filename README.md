@@ -1,70 +1,166 @@
-# Getting Started with Create React App
+# MedPlus Customer Dashboard | Technical Documentation
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Version:** 2.0.0  
+**Status:** Production Ready  
+**Last Updated:** December 2025
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 1. Executive Summary
+The **MedPlus Customer Dashboard** is an enterprise-grade analytics platform designed to empower stakeholders with actionable insights into sales performance, customer retention, and operational efficiency. By leveraging a hierarchical data model and real-time client-side aggregation, the application provides instant visibility into key performance indicators (KPIs) across multiple organizational levels—from State to individual Managers.
 
-### `npm start`
+The platform features a bespoke "Indigo & Slate" design system, ensuring a premium, accessible, and responsive user experience across all devices.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 2. System Architecture
 
-### `npm test`
+The application follows a **Component-Based Architecture** powered by React.js, utilizing a unidirectional data flow.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```mermaid
+graph TD
+    User[User Interaction] -->|Selects Filter| App[App.js Controller]
+    App -->|Updates State| StateMgr[State Management]
+    StateMgr -->|Triggers| Aggregator[Data Aggregator Utility]
+    
+    subgraph Data Layer
+        RawData[JSON Data Source] --> Aggregator
+    end
+    
+    Aggregator -->|Returns Aggregated Object| App
+    App -->|Passes Props| Dashboard[DashboardSections Component]
+    App -->|Passes Props| FilterBar[FilterBar Component]
+    
+    Dashboard -->|Renders| Charts[Chart.js Visualizations]
+    Dashboard -->|Renders| KPIs[KPI Cards]
+    Dashboard -->|Renders| Tables[Data Tables]
+```
 
-### `npm run build`
+### 2.1 Core Technologies
+*   **Frontend Framework**: React 18 (Functional Components, Hooks)
+*   **State Management**: React Context / Local State (useState, useMemo)
+*   **Visualization Engine**: Chart.js with React-Chartjs-2 wrapper
+*   **Styling Engine**: CSS Variables (Custom Properties) & React Bootstrap Grid
+*   **Build Tool**: Create React App (Webpack/Babel)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 3. Data Model & Schema
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The application consumes a hierarchical JSON dataset designed for efficient client-side traversal.
 
-### `npm run eject`
+### 3.1 Hierarchy Definition
+The data is structured as a nested dictionary to allow O(1) access times for specific nodes.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```json
+{
+  "StateName": {
+    "AreaName": {
+      "supervisor": "String (Name)",
+      "supervisorId": "String (ID)",
+      "manager": "String (Name)",
+      "managerId": "String (ID)",
+      "kpis": {
+        "revenue": "Number",
+        "invoices": "Number",
+        "activeUsers": "Number"
+      },
+      "customerRetention": { ... },
+      "trendPanel": { ... }
+    }
+  }
+}
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 3.2 Aggregation Logic (`src/utils/dataAggregator.js`)
+The `aggregateAreas` function is the core computational engine. It performs the following operations:
+1.  **Deep Cloning**: Creates a safe copy of the template structure.
+2.  **Vector Addition**: Sums KPI metrics across all selected areas.
+3.  **Array Reduction**: Merges time-series data (e.g., Monthly Revenue) by index.
+4.  **Cohort Synthesis**: Calculates weighted averages for retention percentages across multiple cohorts.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 4. Component Reference
 
-## Learn More
+### 4.1 `App.js` (Root Controller)
+Acts as the single source of truth for the application state.
+*   **Responsibilities**:
+    *   Maintains filter state (`selectedState`, `selectedArea`, etc.).
+    *   Memoizes derived lists (e.g., list of Supervisors for the current State).
+    *   Orchestrates data flow between the Aggregator and UI components.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 4.2 `DashboardSections.js` (Presentation Layer)
+A pure presentational component responsible for rendering the visualized data.
+*   **Props**:
+    *   `data`: The fully aggregated data object.
+    *   `selectedState`: Used for conditional rendering (e.g., Confetti effects).
+*   **Sub-components**:
+    *   `Bar` (Revenue Trends)
+    *   `Line` (MAU/DAU)
+    *   `Doughnut` (Segmentation)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 4.3 `FilterBar.js` (Control Layer)
+Provides the interface for data slicing.
+*   **Features**:
+    *   **Context Awareness**: Disables "Area" dropdown until a "State" is selected.
+    *   **Custom UI**: Replaces native `<select>` with styled `Dropdown` components for brand consistency.
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 5. Design System Specifications
 
-### Analyzing the Bundle Size
+The UI is built upon a strict set of design tokens defined in `src/styles/dashboard.css`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### 5.1 Color Theory
+| Token | Hex Value | Usage |
+|-------|-----------|-------|
+| `--primary-color` | `#4f46e5` | Primary actions, active states, key data points |
+| `--surface-color` | `#ffffff` | Card backgrounds, modal windows |
+| `--background-color` | `#f8fafc` | Global application background |
+| `--text-secondary` | `#64748b` | Labels, secondary metadata |
 
-### Making a Progressive Web App
+### 5.2 Typography
+*   **Display Font**: `Outfit` (Weights: 500, 600, 700) - Used for KPIs and Section Headers.
+*   **Body Font**: `Inter` (Weights: 400, 500) - Used for tables, charts, and controls.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## 6. Development Standards
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### 6.1 Code Style
+*   **Functional Programming**: Prefer pure functions for logic (e.g., aggregators).
+*   **Hooks Pattern**: Use `useMemo` for expensive calculations to ensure 60fps rendering.
+*   **Component Composition**: Break down complex UIs into smaller, reusable atoms.
 
-### Deployment
+### 6.2 Performance Optimization
+*   **Memoization**: The `areas`, `supervisors`, and `managers` lists are memoized to prevent unnecessary recalculations during re-renders.
+*   **Lazy Evaluation**: Data aggregation only runs when filter dependencies change.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
+## 7. Setup & Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 7.1 Local Development Environment
+```bash
+# Clone repository
+git clone <repo-url>
+
+# Install dependencies
+npm install
+
+# Start development server (Hot Reloading enabled)
+npm start
+```
+
+### 7.2 Production Build
+The application is optimized for static hosting (S3, Vercel, Netlify).
+```bash
+# Generate production bundle
+npm run build
+```
+*Output*: A minified, tree-shaken `build/` directory ready for deployment.
+
+---
+
+**Confidentiality Notice**: This software and its documentation are proprietary to MedPlus. Unauthorized distribution is strictly prohibited.
