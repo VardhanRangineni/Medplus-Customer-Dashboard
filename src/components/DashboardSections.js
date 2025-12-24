@@ -135,11 +135,13 @@ const DashboardSections = ({ data, selectedState, theme }) => {
     };
 
     // Doughnut Options
+    // Doughnut Options
     const doughnutOptions = {
         ...pieOptions,
-        cutout: '75%', // Thinner ring like reference
+        cutout: '60%', // Thicker ring
         plugins: {
             ...pieOptions.plugins,
+            // Re-enable tooltips but keep custom legend
             legend: {
                 ...pieOptions.plugins.legend,
                 position: 'right', // Side labels
@@ -147,8 +149,11 @@ const DashboardSections = ({ data, selectedState, theme }) => {
         },
         elements: {
             arc: {
-                borderWidth: 5, // Thicker spacing between segments
-                borderColor: isDark ? 'rgba(15, 23, 42, 1)' : '#ffffff' // Ensure cut looks clean
+                borderWidth: 12,
+                borderColor: isDark ? 'rgba(15, 23, 42, 1)' : '#ffffff',
+                hoverBorderWidth: 12, // Maintain thickness on hover
+                hoverBorderColor: isDark ? 'rgba(15, 23, 42, 1)' : '#ffffff', // Maintain color on hover
+                hoverOffset: 0 // Prevent segment from expanding/popping out on hover
             }
         }
     };
@@ -232,7 +237,7 @@ const DashboardSections = ({ data, selectedState, theme }) => {
         datasets: [{
             data: customerSegmentation.byChannel.map(item => item.pct * 100),
             backgroundColor: [colors.primary, colors.success, colors.warning, colors.info, colors.danger],
-            borderWidth: 0,
+
         }],
     };
 
@@ -242,7 +247,7 @@ const DashboardSections = ({ data, selectedState, theme }) => {
         datasets: [{
             data: customerSegmentation.revenueByChannel.map(item => item.pct * 100),
             backgroundColor: [colors.primary, colors.purple, colors.success, colors.info, colors.danger],
-            borderWidth: 0,
+
         }]
     };
 
@@ -355,14 +360,14 @@ const DashboardSections = ({ data, selectedState, theme }) => {
 
 
     return (
-        <div className="dashboard-sections">
+        <div className="dashboard-sections" >
 
             {/* Section 1: KPI & Segmentation */}
-            <div id="section1" className="dashboard-section">
+            < div id="section1" className="dashboard-section" >
                 <h4 className="section-title">KPIs & Customer Segmentation</h4>
 
                 {/* KPI Cards */}
-                <Row className="g-4 mb-4">
+                <Row className="g-4 mb-4" >
                     <Col md={3}>
                         <div className="kpi-card">
                             <div className="kpi-title">DAU / MAU Ratio</div>
@@ -389,7 +394,7 @@ const DashboardSections = ({ data, selectedState, theme }) => {
                             <div className="kpi-value">{kpis.mtdMaPharmaPlansSold.toLocaleString()}</div>
                         </div>
                     </Col>
-                </Row>
+                </Row >
 
                 <Row className="g-4">
                     <Col md={4}>
@@ -438,10 +443,10 @@ const DashboardSections = ({ data, selectedState, theme }) => {
                         </div>
                     </Col>
                 </Row>
-            </div>
+            </div >
 
             {/* Section 2: Sales & Invoice Analytics */}
-            <div id="section2" className="dashboard-section">
+            < div id="section2" className="dashboard-section" >
                 <h4 className="section-title">Sales & Invoice Analytics</h4>
                 <Row className="g-4">
                     <Col md={6}>
@@ -482,10 +487,10 @@ const DashboardSections = ({ data, selectedState, theme }) => {
                         </div>
                     </Col>
                 </Row>
-            </div>
+            </div >
 
             {/* Section 3: Trend Panel */}
-            <div id="section3" className="dashboard-section">
+            < div id="section3" className="dashboard-section" >
                 <h4 className="section-title">Trend Panel</h4>
                 <Row className="g-4">
                     <Col md={6}>
@@ -521,10 +526,10 @@ const DashboardSections = ({ data, selectedState, theme }) => {
                         </div>
                     </Col>
                 </Row>
-            </div>
+            </div >
 
             {/* Section 4: Customer Retention */}
-            <div id="section4" className="dashboard-section">
+            < div id="section4" className="dashboard-section" >
                 <h4 className="section-title">Customer Retention</h4>
                 <div className="chart-container">
                     <div className="chart-title">Cohort Analysis (Retention %)</div>
@@ -677,9 +682,9 @@ const DashboardSections = ({ data, selectedState, theme }) => {
                         </Table>
                     </div>
                 </div>
-            </div>
+            </div >
 
-        </div>
+        </div >
     );
 };
 
