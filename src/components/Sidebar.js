@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaChartPie, FaFileInvoiceDollar, FaChartLine, FaUsers } from 'react-icons/fa';
 
-const Sidebar = ({ activeSection, scrollToSection, isOpen, toggleSidebar }) => {
+const Sidebar = ({ activeSection, scrollToSection, isOpen, toggleSidebar, theme, toggleTheme }) => {
     return (
         <>
             <div
@@ -36,6 +36,22 @@ const Sidebar = ({ activeSection, scrollToSection, isOpen, toggleSidebar }) => {
                 >
                     <FaUsers />
                     <span>Customer Retention</span>
+                </div>
+
+                <div className="sidebar-spacer" style={{ flex: 1 }}></div>
+
+                <div className="nav-item theme-toggle" onClick={toggleTheme}>
+                    {theme === 'dark' ? (
+                        <>
+                            <i className="bi bi-sun-fill" style={{ color: '#fbbf24' }}></i>
+                            <span>Light Mode</span>
+                        </>
+                    ) : (
+                        <>
+                            <i className="bi bi-moon-stars-fill" style={{ color: '#6366f1' }}></i>
+                            <span>Dark Mode</span>
+                        </>
+                    )}
                 </div>
             </div>
         </>

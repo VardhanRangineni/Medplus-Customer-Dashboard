@@ -26,6 +26,17 @@ function App() {
   const [selectedSupervisor, setSelectedSupervisor] = useState('');
   const [selectedManager, setSelectedManager] = useState('');
 
+  // Theme State
+  const [theme, setTheme] = useState('light');
+  const toggleTheme = () => {
+    setTheme(prevTheme => prevTheme === 'dark' ? 'light' : 'dark');
+  };
+
+  // Apply theme to global document for body styling
+  React.useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   const toggleFilters = () => setIsFiltersOpen(!isFiltersOpen);
 
@@ -176,6 +187,8 @@ function App() {
           scrollToSection={scrollToSection}
           isOpen={isSidebarOpen}
           toggleSidebar={toggleSidebar}
+          theme={theme}
+          toggleTheme={toggleTheme}
         />
         <div className="content-area">
           <FilterBar
@@ -194,7 +207,7 @@ function App() {
             isOpen={isFiltersOpen}
             toggleFilters={toggleFilters}
           />
-          <DashboardSections data={currentData} selectedState={selectedState} />
+          <DashboardSections data={currentData} selectedState={selectedState} theme={theme} />
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaBars } from 'react-icons/fa';
+import logo from '../Assets/medplus_logo@2x.png';
 
 const Header = ({ toggleSidebar }) => {
   return (
@@ -8,8 +9,7 @@ const Header = ({ toggleSidebar }) => {
         <FaBars />
       </div>
       <div className="logo-area">
-        <span style={{ color: 'var(--danger-color)', fontWeight: '800' }}>MedPlus</span>
-        <span style={{ color: 'var(--success-color)' }}>+</span>
+        <img src={logo} alt="MedPlus" height="42" style={{ objectFit: 'contain', borderRadius: '8px' }} />
       </div>
       <div className="header-title">
         Customer Dashboard
